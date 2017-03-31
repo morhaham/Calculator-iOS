@@ -28,6 +28,25 @@ func division(operand1: Double, operand2: Double)->Double{
     return operand1/operand2
 }
 
+func mod(operand1: Double, operand2: Double)->Double{
+    return operand1.truncatingRemainder(dividingBy: operand2)
+}
+
+func powit(operand1: Double, operand2: Double)->Double{
+    guard operand2 != 0 else{
+        return 1
+    }
+    var result = operand1, p = operand2
+    while p > 1 {
+        result *= operand1
+        p = p - 1
+    }
+    return result
+}
+
+
+
+
 
 struct Calc {
     
@@ -52,7 +71,11 @@ struct Calc {
         "+" : Operation.binaryOperation(addition),
         "-" : Operation.binaryOperation(subtraction),
         "=" : Operation.equals,
-        "÷" : Operation.binaryOperation(division)
+        "÷" : Operation.binaryOperation(division),
+        "mod" : Operation.binaryOperation(mod),
+        "sin" : Operation.unaryOperation(sin),
+        "tan" : Operation.unaryOperation(tan),
+        "pow" : Operation.binaryOperation(powit)
     
     ]
     
@@ -76,7 +99,6 @@ struct Calc {
         }
         
     }
-    
     
     
     

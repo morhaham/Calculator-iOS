@@ -14,6 +14,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var dotButton: UIButton!
     var userIsTyping = false
     
+    @IBAction func ClearDisplay(_ sender: UIButton) {
+        if sender.currentTitle != nil{
+            display.text = ""
+            displayValue = 0
+        }
+    }
     
     
     @IBAction func touchDigit(_ sender: UIButton) {
