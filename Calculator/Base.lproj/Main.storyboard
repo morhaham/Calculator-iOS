@@ -276,7 +276,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="CLR"/>
                                 <connections>
-                                    <action selector="ClearDisplay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jSk-e8-Mv3"/>
+                                    <action selector="clearDisplay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Waz-6v-AR7"/>
                                 </connections>
                             </button>
                         </subviews>

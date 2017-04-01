@@ -14,10 +14,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var dotButton: UIButton!
     var userIsTyping = false
     
-    @IBAction func ClearDisplay(_ sender: UIButton) {
+
+    @IBAction func clearDisplay(_ sender: UIButton) {
         if sender.currentTitle != nil{
-            display.text = ""
             displayValue = 0
+            display.text = String(displayValue)
+            
         }
     }
     
@@ -59,7 +61,12 @@ class ViewController: UIViewController {
             userIsTyping = false
         }
         if let symbol = sender.currentTitle {
-            brain.performOperation(symbol)
+            if displayValue != 0 {
+                brain.performOperation(symbol)
+            }
+            else {
+                return
+            }
         }
         if let result = brain.result {
             displayValue = result
