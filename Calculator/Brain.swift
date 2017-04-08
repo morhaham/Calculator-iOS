@@ -51,6 +51,9 @@ func powit(operand1: Double, operand2: Double)->Double{
 struct Calc {
     
     private var accumulator: Double?
+    var symbolIsAconstant = false
+    var resultIsPending = false
+    var description = ""
     
     private enum Operation {
         case constant(Double)
@@ -80,10 +83,12 @@ struct Calc {
     ]
     
     mutating func performOperation(_ symbol: String) {
+        symbolIsAconstant = false
         if let operation = operations[symbol] {
             switch operation {
             case .constant(let value):
                 accumulator = value
+                symbolIsAconstant = true
             case .unaryOperation(let function):
                 if accumulator != nil {
                     accumulator = function(accumulator!)
@@ -97,6 +102,7 @@ struct Calc {
                 performPendingBinaryOperation()
             }
         }
+        
         
     }
     

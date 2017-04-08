@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var dotButton: UIButton!
+    @IBOutlet weak var currentDisplay: UILabel!
     var userIsTyping = false
     
 
@@ -19,6 +20,7 @@ class ViewController: UIViewController {
         if sender.currentTitle != nil{
             displayValue = 0
             display.text = String(displayValue)
+            currentDisplay.text! = ""
             
         }
     }
@@ -36,10 +38,13 @@ class ViewController: UIViewController {
             if userIsTyping {
                 let textCurrentInDisplay = display.text!
                 display.text = textCurrentInDisplay + digit
+                currentDisplay.text! = currentDisplay.text! + digit
             }
             else {
                 display.text = digit
+                currentDisplay.text! = currentDisplay.text! + digit
                 userIsTyping = true
+                
             }
         }
     }
@@ -54,6 +59,7 @@ class ViewController: UIViewController {
     }
     
     private var brain = Calc()
+    let numbers: CharacterSet = ["0","1","2","3","4","5","6","7","8","9"]
     
     @IBAction func touchSymbol(_ sender: UIButton) {
         if userIsTyping {
@@ -61,17 +67,30 @@ class ViewController: UIViewController {
             userIsTyping = false
         }
         if let symbol = sender.currentTitle {
-            if displayValue != 0 {
-                brain.performOperation(symbol)
+            if currentDisplay.text!.contains(symbol) || currentDisplay.text!.contains("=") || currentDisplay.text!.rangeOfCharacter(from: numbers) == nil {
+                currentDisplay.text!.remove(at: currentDisplay.text!.index(before: currentDisplay.text!.endIndex))
             }
-            else {
-                return
+            if currentDisplay.text! == "" {
+                currentDisplay.text! = ""
             }
+            currentDisplay.text! = currentDisplay.text! + symbol
+            brain.performOperation(symbol)
+            
+            if let result = brain.result {
+                if displayValue != 0 && brain.symbolIsAconstant == false {
+                    displayValue = result
+                }
+                else if brain.symbolIsAconstant == true {
+                    displayValue = result
+                }
+                else{
+                    return
+                }
+                displayValue = result
+                
+            }
+            
         }
-        if let result = brain.result {
-            displayValue = result
-        }
-        
     }
     
     
