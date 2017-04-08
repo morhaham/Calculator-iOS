@@ -21,6 +21,7 @@ class ViewController: UIViewController {
             displayValue = 0
             display.text = String(displayValue)
             currentDisplay.text! = ""
+            userIsTyping = false
             
         }
     }
@@ -67,15 +68,14 @@ class ViewController: UIViewController {
             userIsTyping = false
         }
         if let symbol = sender.currentTitle {
-            if currentDisplay.text!.contains(symbol) || currentDisplay.text!.contains("=") || currentDisplay.text!.rangeOfCharacter(from: numbers) == nil {
+            if (currentDisplay.text!.contains("=") || currentDisplay.text!.rangeOfCharacter(from: numbers) == nil) && (currentDisplay.text! != "") {
                 currentDisplay.text!.remove(at: currentDisplay.text!.index(before: currentDisplay.text!.endIndex))
             }
-            if currentDisplay.text! == "" {
-                currentDisplay.text! = ""
+                
+            else {
+                currentDisplay.text! = currentDisplay.text! + symbol
             }
-            currentDisplay.text! = currentDisplay.text! + symbol
             brain.performOperation(symbol)
-            
             if let result = brain.result {
                 if displayValue != 0 && brain.symbolIsAconstant == false {
                     displayValue = result
@@ -87,6 +87,8 @@ class ViewController: UIViewController {
                     return
                 }
                 displayValue = result
+                currentDisplay.text! = ""
+                
                 
             }
             
